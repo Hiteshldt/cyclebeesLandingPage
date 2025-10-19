@@ -1,0 +1,313 @@
+CycleBees Landing Page – Product Requirements Document (PRD)
+
+1. Purpose & Scope
+
+Design and build a single‑page landing site for CycleBees using Next.js with a premium elegant, and modern styling solution. should encourage the user to downlado mobile‑app downloads and states about brand, about us, and genearl ladning page purpose, and strictly follow a full‑viewport‑section scrolling experience.
+
+2. Business Objectives
+
+Priority
+
+Objective
+
+Primary
+
+Drive Android & iOS app downloads (visible CTAs + deep links).
+
+Secondary
+
+Establish brand credibility & trust via clear value proposition and polished UI.
+
+Tertiary
+
+Generate leads for repair/rental services & training courses (form submissions).
+
+3. Target Audience
+
+Everyone, professional cyclist to teen kid cyclist
+
+4. Tech & Performance Requirements
+
+Area
+
+Requirement
+
+Framework
+
+Next.js (Pages Router) or App Router (choose one; prefer Pages for simplicity).
+
+Styling
+
+Tailwind CSS (lightweight, tree‑shakable) OR plain CSS Modules. Avoid heavy UI libraries.
+
+Fonts
+
+Self‑hosted Google Fonts via @next/font; 1 serif + 1 sans‑serif max.
+
+Images
+
+Optimized via next/image; use local placeholder assets.
+
+Lighthouse
+
+≥ 90 in Performance, Accessibility, Best Practices & SEO on mobile.
+
+Bundle Size
+
+≤ 150 kB JS (after gzip) initial load.
+
+Tracking
+
+Integrate Google Analytics 4 with event for Download CTA & Lead Form Submit.
+
+5. Brand & Visual Guidelines
+
+Element
+
+Specification
+
+Primary Color
+
+#FFD11E
+
+Secondary Palette
+
+#2D3E50, #FBE9A0, #FFF5CC, #2F2500, #2B2E00, #4A4A4A
+
+Logo
+
+Supplied SVG/PNG; fits 40 px height in Header & Footer., proveid in the file name lgoo, check
+
+Icons
+
+Feather or Heroicons (outline); may be replaced later with custom SVGs.
+
+Imagery
+
+Stock phone/mock‑ups & cyclist lifestyle photos; license‑free placeholders.
+
+Typography
+
+Headings: 600‑700 weight; Body: 400 weight; max 70 chars/line.
+
+Gradients
+
+Subtle, brand‑tinted; no overpowering backgrounds.
+
+6. Layout & Navigation Rules
+
+Sticky Header (64‑72 px) always visible; hides on scroll‑down, reveals on scroll‑up.
+
+Full‑Viewport Sections (min-h-screen): each subsection occupies 70 vh with no partial cut‑offs. Use scroll‑snap‑y mandatory for smooth section‑by‑section scroll.
+
+Avoid excessive white‑space; keep content vertically centered per section.
+
+Use responsive CSS Grid / Flexbox to stack content on < 768 px screens.
+
+Obey 12‑column desktop grid / 4‑column mobile grid for consistent alignment.
+
+make the website responsive
+
+7. Information Architecture
+
+/
+ ├─ Header  (global)
+ │   ├─ Logo (left)
+ │   ├─ Nav Links: Home | Services | About | Contact
+ │   └─ Primary CTA: [Download]
+ ├─ Home (single page, 8 subsections)
+ └─ Footer (global)
+
+8. Page & Section Specifications
+
+8.1 Header (Global)
+
+Height 64‑72 px; primary color background.
+
+Navigation collapses to hamburger on < 1024 px.
+
+Download button prominent (contrast ratio ≥ 4.5).
+
+8.2 Home – Subsections
+
+Each subsection still occupies one full viewport (min-h-screen + scroll-snap-align:start). Content below should be considered source‑of‑truth copy or placeholders that designers/devs will iterate on.
+
+ID
+
+Detailed Content & Copy
+
+Layout Guidance
+
+Assets & Components
+
+#hero
+
+Headline (H1): “Download the Best CycleBees Service App for Android & iOS”
+
+Sub‑headline: “Professional bicycle mechanics at your doorstep—repairs, rentals & coaching in one tap.”
+
+Bullet list:
+
+• Doorstep repairs for kids’ & pro bikes
+
+• Premium rentals delivered to your hotel
+
+• Coaching programs from certified riders
+
+Primary CTA: “Download App” (App Store badge / Play Store badge)
+
+Secondary CTA: “Book a Service”
+
+2‑column desktop.
+
+• Left: text + CTAs, vertically centered.
+
+• Right: Phone mock‑up (PNG/SVG) with app screenshots, set on diagonal yellow‑to‑navy gradient.
+
+next/image for phone.
+
+Gradient CSS utility.
+
+#services
+
+Section Heading (H2): “Bicycle Services at Home”
+
+Intro copy: “Skip the shop queue—our certified mechanics come to you anywhere in Coimbatore.”
+
+Service Card Grid (10): Chain Repair • Brake Tuning • Gear Adjustment • Tyre Replacement • Wheel Truing • E‑Bike Diagnostics • Periodic Service • Full Overhaul • Quick Wash • Emergency On‑Road Assist
+
+Lead Form (Right):
+
+• Name
+
+• Phone (+91) validation
+
+• Service Type (select)
+
+• Preferred Date & Time (date‑time picker)
+
+• CTA: “Book Now”
+
+Left 2/3 width: heading + grid (5×2, 96 px cards).
+
+Right 1/3: sticky form on desktop; full‑width on mobile.
+
+10 Feather icons (temporary).
+
+Form handled via React‑Hook‑Form + yup.
+
+#onCall
+
+Section Heading (H2): “Mechanic‑on‑Call—Doorstep Bike Service”
+
+3 Benefit Blocks (icon + H3 + text):
+
+Less Time Consuming: “Get back on the road in under 60 minutes on average.”
+
+Book in Real‑Time: “Schedule from home, office or on the move—track your mechanic live.”
+
+Sit & Relax: “Enjoy your coffee while we service your ride at your doorstep.” | Single‑column mobile, 3‑col grid ≥ 1024 px. | Placeholder icons. |
+| #howItWorks | Heading (H2): “How CycleBees Works”Steps (1‑4):
+
+Select Service/Rental
+
+Confirm Slot & Address
+
+Pay Securely in App
+
+We Arrive & Deliver | Horizontal timeline (desktop) with numbered circles & icons; vertical stacked (mobile).Phone mock‑up centered above timeline. | 4 custom line icons (placeholder). |
+| #benefits | Heading (H2): “Why Riders Love CycleBees”4 Benefit Cards:
+
+Certified Technicians – Trained, background‑checked mechanics.
+
+Transparent Pricing – Up‑front quotes, no hidden fees.
+
+Genuine Parts – OEM & high‑grade spares only.
+
+100% Satisfaction – Re‑service free if you’re not happy. | 2×2 grid desktop; swipeable carousel on mobile. | Icons per card. |
+| #whyUs | Heading (H2): “The CycleBees Difference”Long‑form persuasive copy (≈ 200 words) adapted from user‑supplied text. Break into 4 sub‑headings:• Doorstep Convenience• Trained Professionals• Competitive & Transparent• Always‑On Support | Single scrollable column with max‑width 768 px for readability. | — |
+| #blog | Heading (H2): “Latest from the Hive”Show 3 latest blog cards (image 16:9, title ≤ 60 chars, 90‑char excerpt). | Responsive masonry/grid layout. | Images via CMS or /public/blog/. |
+| #download | Visually mirrors #hero but with shorter copy:“Ready to Ride? Download CycleBees Now” + store badges + QR code option. | 2‑column desktop; stacked mobile. | App badges, QR PNG. |
+
+Note: All texts are draft placeholders—final copy subject to brand voice review.
+
+8.3 Footer (Global) Footer (Global)
+
+Top divider line.
+
+Left column: Logo + 50‑word description.
+
+Center columns: Quick Links (Home, Services, Blog, About, Contact) + Policies (T&C, Privacy).
+
+Right column: Social icons (LinkedIn, Instagram, X).
+
+Bottom: © CycleBees 2025 • Coimbatore, India.
+
+9. Forms & CTAs
+
+Element
+
+Validation
+
+Success UX
+
+Lead Form
+
+Required: Name, Phone (10 digits), Service type.
+
+Toast + GA event + optional redirect.
+
+Download Buttons
+
+Deep‑link to store URLs with UTM params.
+
+Opens respective store.
+
+10. Accessibility & SEO
+
+Semantic HTML5 (header, main, section, footer).
+
+Contrast ratio ≥ 4.5 for text/icons.
+
+alt text on all images.
+
+Keyboard‑navigable & focus outlines visible.
+
+Meta tags: title ≤ 60 chars, description ≤ 155.
+
+Open Graph tags & Twitter cards for sharing.
+
+11. Analytics & KPIs
+
+Page views & unique visitors.
+
+Clicks on Download (hero & footer).
+
+Lead form submissions.
+
+Average scroll depth per section.
+
+12. Non‑Functional Requirements
+
+Fully responsive (320 px → 1440 px).
+
+Load Time ≤ 2.5 s on 3G (LCP ≤ 2.5 s).
+
+Defer non‑critical JS; lazy‑load images.
+
+Deployed via Vercel; preview branches for PRs.
+
+Code linting via ESLint + Prettier; Husky pre‑commit hook.
+
+13. Open Questions
+
+Final store URLs & UTM parameters for download buttons?
+
+Source of blog data (static markdown, Headless CMS, or API)?
+
+Do we require multilingual support at launch?
+
+Confirm final imagery & icon style set.
+
+Next Step: Approve PRD or provide edits. Once locked, we’ll proceed to wireframes, then component code in incremental sprints.
+

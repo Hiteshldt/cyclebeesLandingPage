@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CycleBees">
+  <title>CycleBees</title>
+  <rect width="64" height="64" rx="14" fill="#FFD11E"/>
+  <g fill="none" stroke="#2F2500" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M28.66 35.41A10 10 0 1 1 20.74 28.15"/>
+    <circle cx="45" cy="38" r="10"/>
+    <path d="M22 29 31 16l14 22"/>
+  </g>
+</svg>

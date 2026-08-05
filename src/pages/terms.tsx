@@ -1,14 +1,20 @@
 import React from 'react';
-import Head from 'next/head';
 import Layout from '@/components/Layout';
+import Seo from '@/components/Seo';
+import { breadcrumbSchema } from '@/lib/schema';
 
 const TermsPage: React.FC = () => {
   return (
     <>
-      <Head>
-        <title>Terms & Conditions - CycleBees</title>
-        <meta name="description" content="CycleBees Terms & Conditions - Rules, disclaimers, and terms of service for using our bicycle repair and rental platform." />
-      </Head>
+      <Seo
+        title="Terms & Conditions"
+        description="The rules, disclaimers and terms of service that apply when you use the CycleBees bicycle repair and rental platform."
+        path="/terms"
+        jsonLd={breadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'Terms & Conditions', path: '/terms' },
+        ])}
+      />
       
       <Layout>
         <div className="min-h-screen bg-white pt-20 border-t border-light-yellow">

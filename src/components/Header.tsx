@@ -1,97 +1,133 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import BrandMark from '@/components/BrandMark';
+
+const navLinks = [
+  { name: 'Home', href: '/' },
+  { name: 'Services', href: '/services' },
+  { name: 'Reviews', href: '/reviews' },
+  { name: 'About', href: '/about' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Contact', href: '/contact' },
+];
 
 const Header: React.FC = () => {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const firstMenuItemRef = useRef<HTMLAnchorElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isScrollingUp, setIsScrollingUp] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
+  /**
+   * The previous implementation kept `lastScrollY` in state and listed it as an
+   * effect dependency, so every single scroll event tore down and re-attached
+   * the listener. A ref holds the previous offset instead: the effect now runs
+   * once and the handler stays put.
+   */
   useEffect(() => {
-    const handleScroll = () => {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const update = () => {
       const currentScrollY = window.scrollY;
-      
       setIsScrolled(currentScrollY > 10);
       setIsScrollingUp(currentScrollY < lastScrollY || currentScrollY < 10);
-      setLastScrollY(currentScrollY);
+      lastScrollY = currentScrollY;
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      // Batch the state update into the next frame rather than every event.
+      window.requestAnimationFrame(update);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
-  // Focus management for mobile menu
+  // Move focus into the mobile menu when it opens, and back to the trigger on close.
   useEffect(() => {
-    if (isMenuOpen) {
-      // Focus first menu item when menu opens
-      setTimeout(() => {
+    const timer = window.setTimeout(() => {
+      if (isMenuOpen) {
         firstMenuItemRef.current?.focus();
-      }, 100);
-    } else {
-      // Return focus to menu button when menu closes
-      setTimeout(() => {
+      } else {
         menuButtonRef.current?.focus();
-      }, 100);
-    }
+      }
+    }, 100);
+    return () => window.clearTimeout(timer);
   }, [isMenuOpen]);
 
-  // Keyboard navigation for mobile menu
+  // Escape closes the menu; body scroll is locked while it is open.
   useEffect(() => {
+    if (!isMenuOpen) return;
+
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (isMenuOpen && event.key === 'Escape') {
-        setIsMenuOpen(false);
-      }
+      if (event.key === 'Escape') setIsMenuOpen(false);
     };
 
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, [isMenuOpen]);
 
-  const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Services', href: '/services' },
-    { name: 'About', href: '/about' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Contact', href: '/contact' },
-  ];
+  const isActive = (href: string) =>
+    href === '/' ? router.pathname === '/' : router.pathname.startsWith(href);
+
+  const scrollToDownload = () => {
+    const element = document.getElementById('download');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      router.push('/#download');
+    }
+  };
 
   return (
     <>
-      <header 
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+      <header
+        className={`fixed top-0 left-0 right-0 z-40 h-16 transition-all duration-300 ${
           isScrollingUp ? 'translate-y-0' : '-translate-y-full'
-        } ${
-          isScrolled 
-            ? 'bg-primary/95 backdrop-blur-sm shadow-lg' 
-            : 'bg-primary'
-        }`}
-        style={{ height: '64px' }}
+        } ${isScrolled ? 'bg-primary/95 backdrop-blur-sm shadow-lg' : 'bg-primary'}`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
-              <Link href="/" className="flex items-center space-x-2">
-                <Image
-                  src="/logo.webp"
-                  alt="CycleBees Logo"
-                  width={40}
-                  height={40}
-                  className="w-10 h-10"
-                  priority
-                />
-                <span className="text-xl font-bold text-secondary-100">CycleBees</span>
-              </Link>
-            </div>
+            {/* Inline mark: no image request, and it inherits brand colour. */}
+            <Link
+              href="/"
+              className="flex items-center gap-2.5 group"
+              aria-label="CycleBees home"
+            >
+              <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-secondary-100 text-primary shadow-sm transition-transform duration-200 group-hover:scale-105">
+                <BrandMark className="w-6 h-6" strokeWidth={6} />
+              </span>
+              <span className="text-xl font-bold tracking-tight text-secondary-100">
+                Cycle<span className="text-secondary-100/70">Bees</span>
+              </span>
+            </Link>
 
-            <nav className="hidden lg:flex items-center space-x-8" role="navigation" aria-label="Main navigation">
+            <nav
+              className="hidden lg:flex items-center space-x-7"
+              aria-label="Main navigation"
+            >
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-secondary-100 hover:text-secondary-400 transition-colors duration-200 font-medium"
+                  aria-current={isActive(link.href) ? 'page' : undefined}
+                  className={`transition-colors duration-200 font-medium ${
+                    isActive(link.href)
+                      ? 'text-secondary-100 underline underline-offset-8 decoration-2'
+                      : 'text-secondary-100/80 hover:text-secondary-100'
+                  }`}
                 >
                   {link.name}
                 </Link>
@@ -99,32 +135,43 @@ const Header: React.FC = () => {
             </nav>
 
             <div className="hidden lg:flex items-center space-x-4">
-              <button 
-                className="relative bg-secondary-100 text-white px-6 py-2 rounded-lg hover:bg-secondary-100/90 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl group overflow-hidden"
-                onClick={() => {
-                  const element = document.getElementById('download');
-                  element?.scrollIntoView({ behavior: 'smooth' });
-                }}
+              <button
+                type="button"
+                className="relative bg-secondary-100 text-white px-6 py-2 rounded-lg hover:bg-secondary-100/90 transition-colors duration-200 font-semibold shadow-lg group overflow-hidden"
+                onClick={scrollToDownload}
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-primary/30 via-white/20 to-primary/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></span>
+                <span
+                  className="absolute inset-0 bg-gradient-to-r from-primary/30 via-white/20 to-primary/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  aria-hidden="true"
+                ></span>
                 <span className="relative z-10">Download App</span>
               </button>
             </div>
 
             <div className="lg:hidden">
               <button
+                type="button"
                 ref={menuButtonRef}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-secondary-100 hover:text-secondary-400 transition-colors duration-200"
+                className="text-secondary-100 hover:text-secondary-400 transition-colors duration-200 p-1"
                 aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
                 aria-expanded={isMenuOpen}
                 aria-controls="mobile-menu"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
                   {isMenuOpen ? (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <path d="M6 18L18 6M6 6l12 12" />
                   ) : (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                    <path d="M4 6h16M4 12h16M4 18h16" />
                   )}
                 </svg>
               </button>
@@ -132,58 +179,79 @@ const Header: React.FC = () => {
           </div>
         </div>
       </header>
-      
-      {/* Mobile menu overlay - positioned after header */}
+
       {isMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-50" id="mobile-menu" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-heading">
-          {/* Full-screen glass overlay - clickable to close */}
-          <div 
-            className="fixed inset-0 bg-black/50 backdrop-blur-xl"
+        <div
+          className="lg:hidden fixed inset-0 z-50"
+          id="mobile-menu"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="mobile-menu-heading"
+        >
+          <button
+            type="button"
+            className="fixed inset-0 bg-black/50 backdrop-blur-xl w-full h-full"
             onClick={() => setIsMenuOpen(false)}
             aria-label="Close menu"
-          ></div>
-          
-          {/* Menu content */}
-          <div className="fixed inset-0 flex flex-col justify-center items-center px-6">
-            <div className="w-full max-w-sm bg-primary/30 backdrop-blur-2xl rounded-2xl border border-white/30 shadow-2xl p-8">
-              
-              {/* Close button */}
+            tabIndex={-1}
+          ></button>
+
+          <div className="fixed inset-0 flex flex-col justify-center items-center px-6 pointer-events-none">
+            <div className="w-full max-w-sm bg-primary/30 backdrop-blur-2xl rounded-2xl border border-white/30 shadow-2xl p-8 pointer-events-auto">
               <div className="flex justify-end mb-4">
                 <button
+                  type="button"
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-white hover:text-primary transition-colors duration-200 p-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-transparent rounded-lg"
+                  className="text-white hover:text-primary transition-colors duration-200 p-2 focus:outline-none focus:ring-2 focus:ring-primary rounded-lg"
                   aria-label="Close menu"
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
-              <h2 id="mobile-menu-heading" className="sr-only">Navigation menu</h2>
+              <h2 id="mobile-menu-heading" className="sr-only">
+                Navigation menu
+              </h2>
 
-              {navLinks.map((link, index) => (
-                <Link
-                  key={link.name}
-                  ref={index === 0 ? firstMenuItemRef : undefined}
-                  href={link.href}
-                  className="block px-6 py-4 text-white hover:text-primary hover:bg-white/20 transition-all duration-200 font-semibold rounded-xl text-center text-lg mb-2 backdrop-blur-sm border border-transparent hover:border-white/40 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-transparent"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              ))}
-              
+              <nav aria-label="Mobile navigation">
+                {navLinks.map((link, index) => (
+                  <Link
+                    key={link.name}
+                    ref={index === 0 ? firstMenuItemRef : undefined}
+                    href={link.href}
+                    aria-current={isActive(link.href) ? 'page' : undefined}
+                    className="block px-6 py-3.5 text-white hover:text-primary hover:bg-white/20 transition-all duration-200 font-semibold rounded-xl text-center text-lg mb-2 border border-transparent hover:border-white/40 focus:outline-none focus:ring-2 focus:ring-primary"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </nav>
+
               <div className="pt-4 border-t border-white/30 mt-4">
-                <button 
-                  className="relative w-full bg-secondary-100/90 backdrop-blur-sm text-white px-6 py-4 rounded-xl hover:bg-secondary-100 transition-all duration-200 font-semibold shadow-xl group overflow-hidden border border-white/30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-transparent"
+                <button
+                  type="button"
+                  className="relative w-full bg-secondary-100/90 backdrop-blur-sm text-white px-6 py-4 rounded-xl hover:bg-secondary-100 transition-colors duration-200 font-semibold shadow-xl group overflow-hidden border border-white/30 focus:outline-none focus:ring-2 focus:ring-primary"
                   onClick={() => {
                     setIsMenuOpen(false);
-                    const element = document.getElementById('download');
-                    element?.scrollIntoView({ behavior: 'smooth' });
+                    scrollToDownload();
                   }}
                   aria-label="Download CycleBees mobile app"
                 >
-                  <span className="absolute inset-0 bg-gradient-to-r from-primary/30 via-white/20 to-primary/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                  <span
+                    className="absolute inset-0 bg-gradient-to-r from-primary/30 via-white/20 to-primary/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    aria-hidden="true"
+                  ></span>
                   <span className="relative z-10 text-lg">Download App</span>
                 </button>
               </div>

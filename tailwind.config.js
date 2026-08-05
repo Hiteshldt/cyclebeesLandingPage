@@ -20,7 +20,8 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        // Fed by next/font in _app.tsx; falls back to the system stack.
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
         serif: ['Georgia', 'serif']
       }
     },

@@ -1,144 +1,135 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Icon, { IconName } from '@/components/Icon';
+import SectionHeading from '@/components/SectionHeading';
+import { BrandWatermark } from '@/components/BrandMark';
+import CarouselControls from '@/components/CarouselControls';
+import useCarousel from '@/hooks/useCarousel';
+
+const benefits: { title: string; description: string; icon: IconName }[] = [
+  {
+    title: 'Certified Technicians',
+    description:
+      'Trained, background-checked mechanics with years of experience in bicycle repair and maintenance.',
+    icon: 'mechanic',
+  },
+  {
+    title: 'Transparent Pricing',
+    description:
+      "Up-front quotes with no hidden fees. You know exactly what you're paying for before we start.",
+    icon: 'rupee',
+  },
+  {
+    title: 'Genuine Parts',
+    description:
+      'We use only OEM and high-grade spare parts to ensure your bicycle performs at its best.',
+    icon: 'gear',
+  },
+  {
+    title: '100% Satisfaction',
+    description:
+      "Re-service free if you're not happy. Your satisfaction is our top priority.",
+    icon: 'shield',
+  },
+];
+
+const stats = [
+  { value: '20+', label: 'Repair Services Available' },
+  { value: '4.8', label: 'Average Rating', showStar: true },
+  { value: '24/7', label: 'Including Emergency Support' },
+];
 
 const BenefitsSection: React.FC = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-  
-  const navButtonStyles = "w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors duration-200";
-  
-  const benefits = [
-    {
-      title: 'Certified Technicians',
-      description: 'Trained, background-checked mechanics with years of experience in bicycle repair and maintenance.',
-      icon: '👨‍🔧'
-    },
-    {
-      title: 'Transparent Pricing',
-      description: 'Up-front quotes with no hidden fees. You know exactly what you\'re paying for before we start.',
-      icon: '💰'
-    },
-    {
-      title: 'Genuine Parts',
-      description: 'We use only OEM and high-grade spare parts to ensure your bicycle performs at its best.',
-      icon: '🔧'
-    },
-    {
-      title: '100% Satisfaction',
-      description: 'Re-service free if you\'re not happy. Your satisfaction is our top priority.',
-      icon: '⭐'
-    }
-  ];
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % benefits.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + benefits.length) % benefits.length);
-  };
-
-  const minSwipeDistance = 50;
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-    
-    if (isLeftSwipe) nextSlide();
-    if (isRightSwipe) prevSlide();
-  };
+  const { index, setIndex, next, previous, swipeHandlers } = useCarousel(
+    benefits.length
+  );
+  const current = benefits[index];
 
   return (
-    <section id="benefits" className="bg-gradient-to-br from-secondary-100 to-secondary-400 py-10 sm:py-8 my-5 border-t border-light-yellow border-b border-light-yellow">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
-        <div className="text-center mb-8">
-          <h2 className="text-xl md:text-2xl font-bold text-white mb-3">
-            Why Riders Love CycleBees
-          </h2>
-          <p className="text-sm text-white/90 max-w-xl mx-auto">
-            Experience the difference with our professional service
-          </p>
-        </div>
+    <section
+      id="benefits"
+      className="relative overflow-hidden bg-gradient-to-br from-secondary-100 to-secondary-400 py-12 sm:py-10 my-5 border-t border-light-yellow border-b border-light-yellow"
+    >
+      <BrandWatermark className="-left-20 -top-16 w-72 h-72 text-white/[0.05]" />
+      <BrandWatermark className="-right-24 -bottom-20 w-96 h-96 text-primary/[0.06]" />
 
-        {/* Desktop Grid View */}
-        <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {benefits.map((benefit, index) => (
-            <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-white hover:bg-white/20 transition-all duration-200">
-              <div className="text-3xl mb-3">{benefit.icon}</div>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
+        <SectionHeading
+          eyebrow="The difference"
+          title="Why Riders Love CycleBees"
+          lead="Experience the difference with our professional service."
+          tone="light"
+          className="mb-10"
+        />
+
+        {/* Desktop grid */}
+        <ul className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-6">
+          {benefits.map((benefit) => (
+            <li
+              key={benefit.title}
+              className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-white hover:bg-white/20 transition-colors duration-200"
+            >
+              <span className="inline-flex items-center justify-center w-12 h-12 mb-3 rounded-full bg-primary text-secondary-100">
+                <Icon name={benefit.icon} className="w-6 h-6" />
+              </span>
               <h3 className="text-lg font-bold mb-3">{benefit.title}</h3>
               <p className="text-white/90 leading-relaxed text-sm">
                 {benefit.description}
               </p>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
 
-        {/* Mobile Carousel View */}
+        {/* Mobile carousel */}
         <div className="md:hidden">
-          <div 
+          <div
             className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-white text-center"
-            onTouchStart={onTouchStart}
-            onTouchMove={onTouchMove}
-            onTouchEnd={onTouchEnd}
+            {...swipeHandlers}
           >
-            <div className="text-4xl mb-4">{benefits[currentSlide].icon}</div>
-            <h3 className="text-xl font-bold mb-3">{benefits[currentSlide].title}</h3>
+            <span className="inline-flex items-center justify-center w-14 h-14 mb-4 rounded-full bg-primary text-secondary-100">
+              <Icon name={current.icon} className="w-7 h-7" />
+            </span>
+            <h3 className="text-xl font-bold mb-3">{current.title}</h3>
             <p className="text-white/90 leading-relaxed mb-4 text-sm">
-              {benefits[currentSlide].description}
+              {current.description}
             </p>
-            
-            <div className="flex justify-center items-center space-x-4">
-              <button onClick={prevSlide} className={navButtonStyles}>
-                ‹
-              </button>
-              
-              <div className="flex justify-center space-x-2">
-                {benefits.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}
-                    className={`w-2 h-2 rounded-full transition-colors duration-200 ${
-                      index === currentSlide ? 'bg-primary' : 'bg-white/30'
-                    }`}
-                  />
-                ))}
-              </div>
-              
-              <button onClick={nextSlide} className={navButtonStyles}>
-                ›
-              </button>
-            </div>
+
+            <CarouselControls
+              count={benefits.length}
+              index={index}
+              onSelect={setIndex}
+              onPrevious={previous}
+              onNext={next}
+              label="benefit"
+              tone="light"
+            />
           </div>
         </div>
 
         <div className="mt-8 text-center">
-          <div className="inline-flex items-center space-x-8 bg-white/10 backdrop-blur-sm rounded-full px-8 py-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">20+</div>
-              <div className="text-sm text-white/80">Repair Services Available</div>
-            </div>
-            <div className="w-px h-8 bg-white/20"></div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">4.8★</div>
-              <div className="text-sm text-white/80">Average Rating</div>
-            </div>
-            <div className="w-px h-8 bg-white/20"></div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">24/7</div>
-              <div className="text-sm text-white/80">Including Emergency Support</div>
-            </div>
-          </div>
+          <dl className="inline-flex flex-wrap justify-center items-center gap-x-8 gap-y-4 bg-white/10 backdrop-blur-sm rounded-3xl px-8 py-4">
+            {stats.map((stat, position) => (
+              <React.Fragment key={stat.label}>
+                {position > 0 && (
+                  <span
+                    className="hidden sm:block w-px h-8 bg-white/20"
+                    aria-hidden="true"
+                  ></span>
+                )}
+                <div className="text-center">
+                  <dt className="sr-only">{stat.label}</dt>
+                  <dd>
+                    <span className="text-2xl font-bold text-primary inline-flex items-center gap-1">
+                      {stat.value}
+                      {stat.showStar && <Icon name="star" className="w-5 h-5" />}
+                    </span>
+                    <span className="block text-sm text-white/80">
+                      {stat.label}
+                    </span>
+                  </dd>
+                </div>
+              </React.Fragment>
+            ))}
+          </dl>
         </div>
       </div>
     </section>

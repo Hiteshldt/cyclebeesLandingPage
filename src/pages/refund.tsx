@@ -1,14 +1,20 @@
 import React from 'react';
-import Head from 'next/head';
 import Layout from '@/components/Layout';
+import Seo from '@/components/Seo';
+import { breadcrumbSchema } from '@/lib/schema';
 
 const RefundPage: React.FC = () => {
   return (
     <>
-      <Head>
-        <title>Refund & Return Policy - CycleBees</title>
-        <meta name="description" content="CycleBees Refund & Return Policy - Our 7-day refund policy, processing times, and return procedures for bicycle repair and rental services." />
-      </Head>
+      <Seo
+        title="Refund & Return Policy"
+        description="CycleBees refund and return policy: 7-day refund window, processing times and return procedures for repair and rental services."
+        path="/refund"
+        jsonLd={breadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'Refund & Return Policy', path: '/refund' },
+        ])}
+      />
       
       <Layout>
         <div className="min-h-screen bg-white pt-20 border-t border-light-yellow">

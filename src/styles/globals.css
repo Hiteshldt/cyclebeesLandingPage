@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Georgia:wght@400;700&display=swap&subset=latin');
+/*
+ * Fonts are loaded via next/font in `src/pages/_app.tsx`, not an @import.
+ * A CSS @import here was render-blocking: the browser had to fetch this
+ * stylesheet, discover the import, then make a second round-trip to
+ * fonts.googleapis.com before any text could paint. (The old rule also asked
+ * Google for "Georgia", which is a local system font it does not serve.)
+ */
 
 * {
   box-sizing: border-box;
@@ -23,8 +29,9 @@ html {
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 section {
@@ -72,10 +79,16 @@ html {
   }
 }
 
-/* Focus styles for accessibility */
-*:focus {
-  outline: 2px solid #FFD11E;
+/*
+ * Focus styles. `*:focus` painted a ring on every mouse click too, including
+ * on yellow surfaces where a #FFD11E ring is invisible. `:focus-visible`
+ * targets keyboard navigation, and the darker ink colour keeps contrast on
+ * both the yellow and white sections.
+ */
+*:focus-visible {
+  outline: 2px solid #2D3E50;
   outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* Performance optimizations */

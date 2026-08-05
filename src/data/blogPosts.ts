@@ -30,6 +30,7 @@ export const blogPosts: BlogPost[] = [
 Remember, regular maintenance is cheaper than major repairs!`,
     image: 'https://res.cloudinary.com/dc6t0u2j2/image/upload/v1755079631/Essential_Bicycle_Maintenance_Tips_for_Monsoon_Season_smocyw.jpg',
     date: 'Aug 5, 2025',
+    isoDate: '2025-08-05',
     category: 'Maintenance',
     readTime: '5 min read',
     author: 'CycleBees Expert Team'
@@ -75,6 +76,7 @@ Remember, regular maintenance is cheaper than major repairs!`,
 Visit our service centers for personalized recommendations!`,
     image: 'https://res.cloudinary.com/dc6t0u2j2/image/upload/v1755079631/Choosing_the_Right_Bicycle_for_Coimbatore_Streets_auttif.jpg',
     date: 'Aug 3, 2025',
+    isoDate: '2025-08-03',
     category: 'Guide',
     readTime: '7 min read',
     author: 'Babu Kumaran'
@@ -134,6 +136,7 @@ Visit our service centers for personalized recommendations!`,
 The future is electric, and it's arriving on two wheels!`,
     image: 'https://res.cloudinary.com/dc6t0u2j2/image/upload/v1755079631/Electic_Future_nc8inx.jpg',
     date: 'Aug 1, 2025',
+    isoDate: '2025-08-01',
     category: 'Technology',
     readTime: '6 min read',
     author: 'Hitesh Gupta'
@@ -195,6 +198,7 @@ For additional safety guidelines, refer to the <a href="https://www.bikeleague.o
 Remember: It's better to arrive late than not at all!`,
     image: 'https://res.cloudinary.com/dc6t0u2j2/image/upload/v1755079631/Top_10_Bicycle_Safety_Tips_for_Coimbatore_Roads_ereprc.jpg',
     date: 'Jul 28, 2025',
+    isoDate: '2025-07-28',
     category: 'Safety',
     readTime: '8 min read',
     author: 'CycleBees Safety Team'

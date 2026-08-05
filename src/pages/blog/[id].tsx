@@ -1,11 +1,13 @@
 import React from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '@/components/Layout';
+import Seo from '@/components/Seo';
 import { BlogPost } from '@/types';
 import { blogPosts } from '@/data/blogPosts';
+import { absoluteUrl } from '@/lib/site';
+import { ORGANIZATION_ID, breadcrumbSchema } from '@/lib/schema';
 
 interface BlogPostPageProps {
   post: BlogPost;
@@ -18,8 +20,23 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-secondary-100 mb-4">Post not found</h1>
-            <Link href="/blog" className="text-primary hover:text-primary/80">
-              ← Back to Blog
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-1.5 text-secondary-100 font-semibold hover:text-primary transition-colors duration-200"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d="m14.5 5-7 7 7 7" />
+              </svg>
+              Back to Blog
             </Link>
           </div>
         </div>
@@ -29,59 +46,39 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
 
   return (
     <>
-      <Head>
-        <title>{post.title} - CycleBees Blog</title>
-        <meta name="description" content={post.excerpt} />
-        <meta name="keywords" content={`CycleBees, cycling, ${post.category.toLowerCase()}, bicycle maintenance, Coimbatore`} />
-        <link rel="canonical" href={`https://cyclebees.com/blog/${post.id}`} />
-        
-        {/* Open Graph tags */}
-        <meta property="og:title" content={`${post.title} - CycleBees Blog`} />
-        <meta property="og:description" content={post.excerpt} />
-        <meta property="og:image" content={post.image} />
-        <meta property="og:type" content="article" />
-        <meta property="article:published_time" content={post.date} />
-        <meta property="article:author" content={post.author} />
-        <meta property="article:section" content={post.category} />
-        
-        {/* Twitter Card tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${post.title} - CycleBees Blog`} />
-        <meta name="twitter:description" content={post.excerpt} />
-        <meta name="twitter:image" content={post.image} />
-        
-        {/* Structured Data for Article */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Article",
-              "headline": post.title,
-              "description": post.excerpt,
-              "image": post.image,
-              "author": {
-                "@type": "Person",
-                "name": post.author
-              },
-              "publisher": {
-                "@type": "Organization",
-                "name": "CycleBees",
-                "logo": {
-                  "@type": "ImageObject",
-                  "url": "https://cyclebees.com/logo.webp"
-                }
-              },
-              "datePublished": post.date,
-              "dateModified": post.date,
-              "mainEntityOfPage": {
-                "@type": "WebPage",
-                "@id": `https://cyclebees.com/blog/${post.id}`
-              }
-            })
-          }}
-        />
-      </Head>
+      <Seo
+        title={post.title}
+        description={post.excerpt}
+        path={`/blog/${post.id}`}
+        image={post.image}
+        type="article"
+        publishedTime={post.isoDate}
+        author={post.author}
+        jsonLd={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: post.title,
+            description: post.excerpt,
+            image: post.image,
+            articleSection: post.category,
+            author: { '@type': 'Person', name: post.author },
+            publisher: { '@id': ORGANIZATION_ID },
+            // ISO 8601, not the display string — Google rejects "Aug 5, 2025".
+            datePublished: post.isoDate,
+            dateModified: post.isoDate,
+            mainEntityOfPage: {
+              '@type': 'WebPage',
+              '@id': absoluteUrl(`/blog/${post.id}`),
+            },
+          },
+          breadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Blog', path: '/blog' },
+            { name: post.title, path: `/blog/${post.id}` },
+          ]),
+        ]}
+      />
       
       <Layout>
         {/* Hero Section */}
@@ -111,7 +108,7 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
               <div className="flex items-center text-secondary-100/90 text-sm">
                 <span>By {post.author}</span>
                 <span className="mx-3">•</span>
-                <span>{post.date}</span>
+                <time dateTime={post.isoDate}>{post.date}</time>
                 <span className="mx-3">•</span>
                 <span>{post.readTime}</span>
               </div>
@@ -128,6 +125,7 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
                   src={post.image}
                   alt={post.title}
                   fill
+                  sizes="(max-width: 896px) 100vw, 896px"
                   className="object-cover"
                   priority
                 />

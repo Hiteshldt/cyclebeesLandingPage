@@ -1,52 +1,73 @@
 import React from 'react';
-import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import Layout from '@/components/Layout';
+import BrandMark from '@/components/BrandMark';
+import Seo from '@/components/Seo';
 import HeroSection from '@/components/HeroSection';
 import ServicesSection from '@/components/ServicesSection';
+import {
+  localBusinessSchema,
+  organizationSchema,
+  websiteSchema,
+} from '@/lib/schema';
 
-// Lazy load below-the-fold components
+/**
+ * Below-the-fold sections are code-split. The placeholder reserves roughly the
+ * height of the real section so the swap does not shift the page (CLS).
+ */
+const placeholder = () => (
+  <div className="min-h-[280px] flex items-center justify-center bg-secondary-300/10 mx-4 rounded-lg">
+    <BrandMark
+      className="w-10 h-10 text-secondary-300 animate-pulse"
+      strokeWidth={6}
+    />
+  </div>
+);
+
 const OnCallSection = dynamic(() => import('@/components/OnCallSection'), {
-  loading: () => <div className="py-8 animate-pulse bg-gray-100 rounded-lg mx-4"></div>
+  loading: placeholder,
 });
-const HowItWorksSection = dynamic(() => import('@/components/HowItWorksSection'), {
-  loading: () => <div className="py-8 animate-pulse bg-gray-100 rounded-lg mx-4"></div>
-});
+const HowItWorksSection = dynamic(
+  () => import('@/components/HowItWorksSection'),
+  { loading: placeholder }
+);
 const BenefitsSection = dynamic(() => import('@/components/BenefitsSection'), {
-  loading: () => <div className="py-8 animate-pulse bg-gray-100 rounded-lg mx-4"></div>
+  loading: placeholder,
 });
 const WhyUsSection = dynamic(() => import('@/components/WhyUsSection'), {
-  loading: () => <div className="py-8 animate-pulse bg-gray-100 rounded-lg mx-4"></div>
+  loading: placeholder,
+});
+const ReviewsSection = dynamic(() => import('@/components/ReviewsSection'), {
+  loading: placeholder,
 });
 const BlogSection = dynamic(() => import('@/components/BlogSection'), {
-  loading: () => <div className="py-8 animate-pulse bg-gray-100 rounded-lg mx-4"></div>
+  loading: placeholder,
 });
 const DownloadSection = dynamic(() => import('@/components/DownloadSection'), {
-  loading: () => <div className="py-8 animate-pulse bg-gray-100 rounded-lg mx-4"></div>
+  loading: placeholder,
 });
 
-const Home: React.FC = () => {
-  return (
-    <>
-      <Head>
-        <title>CycleBees - Professional Bicycle Services</title>
-        <meta name="description" content="Premium bicycle services at your doorstep. Expert repairs, quality rentals & professional coaching. Trusted by riders across Coimbatore." />
-        <meta name="keywords" content="professional bicycle repair, premium bike service, expert mobile mechanic, quality bike rental, professional cycling coach, Coimbatore bicycle services" />
-        <link rel="canonical" href="https://cyclebees.com" />
-      </Head>
-      
-      <Layout>
-        <HeroSection />
-        <ServicesSection />
-        <OnCallSection />
-        <HowItWorksSection />
-        <BenefitsSection />
-        <WhyUsSection />
-        <BlogSection />
-        <DownloadSection />
-      </Layout>
-    </>
-  );
-};
+const Home: React.FC = () => (
+  <>
+    <Seo
+      title="Doorstep Bicycle Service in Coimbatore"
+      description="Book certified bicycle mechanics at your doorstep in Coimbatore. Repairs, servicing, e-bike diagnostics and rentals with upfront pricing and ~60 minute arrival."
+      path="/"
+      jsonLd={[organizationSchema, localBusinessSchema, websiteSchema]}
+    />
+
+    <Layout>
+      <HeroSection />
+      <ServicesSection />
+      <OnCallSection />
+      <HowItWorksSection />
+      <BenefitsSection />
+      <WhyUsSection />
+      <ReviewsSection />
+      <BlogSection />
+      <DownloadSection />
+    </Layout>
+  </>
+);
 
 export default Home;

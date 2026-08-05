@@ -1,14 +1,20 @@
 import React from 'react';
-import Head from 'next/head';
 import Layout from '@/components/Layout';
+import Seo from '@/components/Seo';
+import { breadcrumbSchema } from '@/lib/schema';
 
 const PrivacyPage: React.FC = () => {
   return (
     <>
-      <Head>
-        <title>Privacy Policy - CycleBees</title>
-        <meta name="description" content="CycleBees Privacy Policy - How we collect, use, and protect your personal information when you use our bicycle repair services." />
-      </Head>
+      <Seo
+        title="Privacy Policy"
+        description="How CycleBees collects, uses and protects your personal information when you book bicycle repair, rental and doorstep services."
+        path="/privacy"
+        jsonLd={breadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'Privacy Policy', path: '/privacy' },
+        ])}
+      />
       
       <Layout>
         <div className="min-h-screen bg-white pt-20 border-t border-light-yellow">

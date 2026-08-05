@@ -23,7 +23,15 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   image: string;
+  /** Human-readable date shown in the UI, e.g. "Aug 5, 2025". */
   date: string;
+  /**
+   * ISO 8601 (YYYY-MM-DD) form of `date`. Required because schema.org
+   * `datePublished` and `<time dateTime>` both need a machine-readable value —
+   * the display string was previously emitted into JSON-LD, which Google
+   * rejects as an invalid date.
+   */
+  isoDate: string;
   category: string;
   readTime: string;
   author: string;

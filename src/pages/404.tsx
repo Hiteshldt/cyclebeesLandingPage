@@ -27,12 +27,12 @@ const NotFoundPage: React.FC = () => (
 
     <Layout>
       <section className="relative overflow-hidden min-h-[70vh] flex items-center justify-center bg-gradient-to-br from-secondary-200 via-primary to-secondary-300 pt-24 pb-16 px-4">
-        <BrandWatermark className="-left-20 -top-12 w-72 h-72 text-secondary-100/[0.07]" />
-        <BrandWatermark className="-right-28 -bottom-24 w-96 h-96 text-white/[0.16]" />
+        <BrandWatermark className="-left-20 -top-12 w-72 text-secondary-100/[0.07]" />
+        <BrandWatermark className="-right-28 -bottom-24 w-96 text-white/[0.16]" />
 
         <div className="relative max-w-xl mx-auto text-center">
           <span className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-secondary-100 text-primary mb-6 shadow-lg">
-            <BrandMark className="w-11 h-11" strokeWidth={6} />
+            <BrandMark className="w-12" />
           </span>
 
           <p className="text-6xl font-bold text-secondary-100 mb-3">404</p>

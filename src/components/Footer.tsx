@@ -60,14 +60,14 @@ const Footer: React.FC = () => {
   return (
     <footer className="relative bg-secondary-100 text-white overflow-hidden">
       {/* Oversized mark adds depth to an otherwise flat navy block. */}
-      <BrandWatermark className="-right-16 -bottom-16 w-80 h-80 text-white/[0.04]" />
+      <BrandWatermark className="-right-16 -bottom-16 w-80 text-white/[0.04]" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
               <span className="flex items-center justify-center w-12 h-12 rounded-xl bg-primary text-secondary-100">
-                <BrandMark className="w-7 h-7" strokeWidth={6} />
+                <BrandMark className="w-8" />
               </span>
               <span className="text-xl font-bold text-primary tracking-tight">
                 CycleBees

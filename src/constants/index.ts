@@ -3,7 +3,7 @@
 export const CONTACT_INFO = {
   PHONE: '+91 95973 12212',
   EMAIL: 'mail@cyclebees.in',
-  ADDRESS: '79, Aarudhra Enclvae, Athipalayam Rd, Saravanampatti, Coimbatore, Tamil Nadu 641035',
+  ADDRESS: '79, Aarudhra Enclave, Athipalayam Rd, Saravanampatti, Coimbatore, Tamil Nadu 641035',
   POSTAL_CODE: '641035',
   STATE: 'Tamil Nadu',
   WHATSAPP_NUMBER: '919597312212'

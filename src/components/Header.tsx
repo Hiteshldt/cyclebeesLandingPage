@@ -107,7 +107,7 @@ const Header: React.FC = () => {
               aria-label="CycleBees home"
             >
               <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-secondary-100 text-primary shadow-sm transition-transform duration-200 group-hover:scale-105">
-                <BrandMark className="w-6 h-6" strokeWidth={6} />
+                <BrandMark className="w-7" />
               </span>
               <span className="text-xl font-bold tracking-tight text-secondary-100">
                 Cycle<span className="text-secondary-100/70">Bees</span>

@@ -17,10 +17,7 @@ import {
  */
 const placeholder = () => (
   <div className="min-h-[280px] flex items-center justify-center bg-secondary-300/10 mx-4 rounded-lg">
-    <BrandMark
-      className="w-10 h-10 text-secondary-300 animate-pulse"
-      strokeWidth={6}
-    />
+    <BrandMark className="w-12 text-secondary-300 animate-pulse" />
   </div>
 );
 

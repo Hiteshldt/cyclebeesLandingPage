@@ -51,7 +51,7 @@ export const ReviewCard: React.FC<{ review: GoogleReview }> = ({ review }) => (
   <article className="bg-white rounded-xl p-5 shadow-md border border-secondary-300/30 flex flex-col h-full">
     <div className="flex items-center justify-between mb-3">
       <Icon name="quote" className="w-7 h-7 text-primary/50" />
-      <BrandMark className="w-6 h-6 text-secondary-300" strokeWidth={6} />
+      <BrandMark className="w-7 text-secondary-300" />
     </div>
 
     <blockquote className="flex-1">

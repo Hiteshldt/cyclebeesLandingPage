@@ -38,7 +38,7 @@ const TermsPage: React.FC = () => {
                   By accessing or using CycleBees services, you agree to be bound by these Terms. If you do not agree with any part of these Terms, please do not use our services.
                 </p>
                 <p className="text-secondary-600 mb-4">
-                  CycleBees Private Limited is a company incorporated under the laws of India, with its registered office at 79, Aarudhra Enclvae, Athipalayam Rd, Saravanampatti, Coimbatore, Tamil Nadu 641035.
+                  CycleBees Private Limited is a company incorporated under the laws of India, with its registered office at 79, Aarudhra Enclave, Athipalayam Rd, Saravanampatti, Coimbatore, Tamil Nadu 641035.
                 </p>
               </section>
 
@@ -286,7 +286,7 @@ const TermsPage: React.FC = () => {
                 </p>
                 <div className="bg-secondary-300/20 rounded-lg p-6">
                   <p className="text-secondary-600 mb-2"><strong>CycleBees Private Limited</strong></p>
-                  <p className="text-secondary-600 mb-2">Address: 79, Aarudhra Enclvae, Athipalayam Rd, Saravanampatti, Coimbatore, Tamil Nadu 641035</p>
+                  <p className="text-secondary-600 mb-2">Address: 79, Aarudhra Enclave, Athipalayam Rd, Saravanampatti, Coimbatore, Tamil Nadu 641035</p>
                   <p className="text-secondary-600 mb-2">Email: <a href="mailto:guru.moorthy@cyclebees.in" className="text-primary hover:text-primary/80">guru.moorthy@cyclebees.in</a></p>
                   <p className="text-secondary-600 mb-2">Customer Support: <a href="mailto:mail@cyclebees.in" className="text-primary hover:text-primary/80">mail@cyclebees.in</a></p>
                   <p className="text-secondary-600">Phone: <a href="tel:+919597312212" className="text-primary hover:text-primary/80">+91 95973 12212</a></p>

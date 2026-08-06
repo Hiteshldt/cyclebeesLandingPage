@@ -59,8 +59,21 @@ to Google as structured data.
 
 - **Icons** — `src/components/Icon.tsx`. Outline SVGs drawn in `currentColor`.
   No emoji in UI.
-- **Logo** — `src/components/BrandMark.tsx` (inline SVG, inherits colour).
-  `BrandWatermark` is the oversized decorative variant.
+- **Logo** — `src/components/BrandMark.tsx`. The path is vector-traced from
+  `public/logo.webp`, so it is the real mark, not a redraw. It is emitted once
+  per page as an SVG `<symbol>` (`BrandMarkSprite`, mounted in `Layout`) and
+  referenced by `<use>`, because the path is ~5KB and appears a dozen times per
+  page. The mark is **1.76:1 (wide)** — size it by width only (`w-8`, never
+  `w-8 h-8`) or it will squash. `BrandWatermark` is the oversized decorative
+  variant. `scripts/generate-icons.js` shares the same path, so favicons, PWA
+  icons and the OG card all stay in sync with it.
+
+  To re-trace after a logo change:
+
+  ```bash
+  # alpha channel -> bitmap -> vector
+  potrace logo.pbm --svg -O 0.6 -a 1.2 -t 20 -o traced.svg
+  ```
 - **Page metadata** — always via `src/components/Seo.tsx`; never hand-roll
   `<Head>` tags, or OG tags end up duplicated.
 - **Section headers** — `SectionHeading`; page heroes — `PageHero`.

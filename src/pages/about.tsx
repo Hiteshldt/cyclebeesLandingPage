@@ -249,7 +249,7 @@ const AboutPage: React.FC = () => (
 
       {/* Values */}
       <section className="relative overflow-hidden py-10 my-3 bg-gradient-to-br from-secondary-100 to-secondary-400 border-t border-light-yellow border-b border-light-yellow">
-        <BrandWatermark className="-left-16 -top-12 w-72 h-72 text-white/[0.05]" />
+        <BrandWatermark className="-left-16 -top-12 w-72 text-white/[0.05]" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Our values"

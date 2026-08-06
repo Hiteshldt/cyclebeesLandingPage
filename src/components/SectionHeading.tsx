@@ -41,7 +41,7 @@ const SectionHeading: React.FC<{
         <p
           className={`flex items-center gap-2 mb-3 ${centred ? 'justify-center' : ''}`}
         >
-          <BrandMark className={`w-5 h-5 ${eyebrowColour}`} strokeWidth={6} />
+          <BrandMark className={`w-6 ${eyebrowColour}`} />
           <span
             className={`text-xs font-bold uppercase tracking-[0.14em] ${eyebrowColour}`}
           >

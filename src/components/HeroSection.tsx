@@ -24,14 +24,14 @@ const HeroSection: React.FC = () => {
       id="hero"
       className="relative overflow-hidden min-h-[85vh] sm:min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-secondary-200 via-primary to-secondary-300 pt-24 sm:pt-20 pb-10 sm:pb-12 border-b border-light-yellow"
     >
-      <BrandWatermark className="-left-28 -top-20 w-80 h-80 text-secondary-100/[0.05]" />
-      <BrandWatermark className="-right-40 -bottom-32 w-[30rem] h-[30rem] text-white/[0.13]" />
+      <BrandWatermark className="-left-28 -top-20 w-80 text-secondary-100/[0.05]" />
+      <BrandWatermark className="-right-40 -bottom-32 w-[30rem] text-white/[0.13]" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center">
           <div className="text-center lg:text-left">
             <p className="inline-flex items-center gap-2 bg-secondary-100 text-primary text-xs font-semibold uppercase tracking-[0.12em] px-3.5 py-2 rounded-full mb-6 shadow-sm">
-              <BrandMark className="w-4 h-4" strokeWidth={6} />
+              <BrandMark className="w-5" />
               Doorstep service across Coimbatore
             </p>
 

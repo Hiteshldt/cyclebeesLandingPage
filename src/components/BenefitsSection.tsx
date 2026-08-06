@@ -49,8 +49,8 @@ const BenefitsSection: React.FC = () => {
       id="benefits"
       className="relative overflow-hidden bg-gradient-to-br from-secondary-100 to-secondary-400 py-12 sm:py-10 my-5 border-t border-light-yellow border-b border-light-yellow"
     >
-      <BrandWatermark className="-left-20 -top-16 w-72 h-72 text-white/[0.05]" />
-      <BrandWatermark className="-right-24 -bottom-20 w-96 h-96 text-primary/[0.06]" />
+      <BrandWatermark className="-left-20 -top-16 w-72 text-white/[0.05]" />
+      <BrandWatermark className="-right-24 -bottom-20 w-96 text-primary/[0.06]" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
         <SectionHeading

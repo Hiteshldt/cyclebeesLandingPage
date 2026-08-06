@@ -194,7 +194,7 @@ const PrivacyPage: React.FC = () => {
                 </p>
                 <div className="bg-secondary-300/20 rounded-lg p-6">
                   <p className="text-secondary-600 mb-2"><strong>CycleBees Private Limited</strong></p>
-                  <p className="text-secondary-600 mb-2">Address: 79, Aarudhra Enclvae, Athipalayam Rd, Saravanampatti, Coimbatore, Tamil Nadu 641035</p>
+                  <p className="text-secondary-600 mb-2">Address: 79, Aarudhra Enclave, Athipalayam Rd, Saravanampatti, Coimbatore, Tamil Nadu 641035</p>
                   <p className="text-secondary-600 mb-2">Email: <a href="mailto:hitesh.gupta@cyclebees.in" className="text-primary hover:text-primary/80">hitesh.gupta@cyclebees.in</a></p>
                   <p className="text-secondary-600 mb-2">Phone: <a href="tel:+919597312212" className="text-primary hover:text-primary/80">+91 95973 12212</a></p>
                   <p className="text-secondary-600">Data Protection Officer: Hitesh Gupta (<a href="mailto:hitesh.gupta@cyclebees.in" className="text-primary hover:text-primary/80">hitesh.gupta@cyclebees.in</a>)</p>

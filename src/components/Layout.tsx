@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header';
+import { BrandMarkSprite } from './BrandMark';
 import Footer from './Footer';
 import WhatsAppFloat from './WhatsAppFloat';
 import ErrorBoundary from './ErrorBoundary';
@@ -12,6 +13,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <ErrorBoundary>
       <div className="min-h-screen">
+        {/* Logo geometry, defined once and referenced by every <BrandMark>. */}
+        <BrandMarkSprite />
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-secondary-100 px-4 py-2 rounded-lg z-50">
           Skip to main content
         </a>

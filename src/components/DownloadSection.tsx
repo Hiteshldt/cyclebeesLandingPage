@@ -29,13 +29,13 @@ const DownloadSection: React.FC = () => {
       id="download"
       className="relative overflow-hidden bg-gradient-to-br from-secondary-200 via-primary to-secondary-300 py-10 border-t border-light-yellow"
     >
-      <BrandWatermark className="-left-20 -bottom-16 w-72 h-72 text-secondary-100/[0.06]" />
+      <BrandWatermark className="-left-20 -bottom-16 w-72 text-secondary-100/[0.06]" />
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
           <div className="text-center lg:text-left order-2 lg:order-1">
             <p className="inline-flex items-center gap-2 mb-4 justify-center lg:justify-start">
-              <BrandMark className="w-5 h-5 text-secondary-100/70" strokeWidth={6} />
+              <BrandMark className="w-6 text-secondary-100/70" />
               <span className="text-xs font-bold uppercase tracking-[0.14em] text-secondary-100/70">
                 Get the app
               </span>

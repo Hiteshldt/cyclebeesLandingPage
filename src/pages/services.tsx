@@ -477,7 +477,7 @@ const ServicesPage: React.FC = () => {
 
         {/* Why choose us */}
         <section className="relative overflow-hidden py-10 bg-gradient-to-br from-secondary-100 to-secondary-400 border-t border-light-yellow">
-          <BrandWatermark className="-right-20 -bottom-16 w-80 h-80 text-primary/[0.06]" />
+          <BrandWatermark className="-right-20 -bottom-16 w-80 text-primary/[0.06]" />
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeading
               eyebrow="Why us"
